@@ -14,8 +14,8 @@
 
 static const NSUInteger kLanCount = 8;
 static NSString* const kCellId = @"ID";
-
 static NSString* const kAllLanguageName = @"8-1.csv";
+
 
 @interface TCZMainViewController ()<UITableViewDataSource, UITableViewDelegate, TCZLocalizableToolsDelegate>
 
@@ -23,7 +23,6 @@ static NSString* const kAllLanguageName = @"8-1.csv";
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
-
 
 
 @implementation TCZMainViewController
@@ -34,7 +33,6 @@ static NSString* const kAllLanguageName = @"8-1.csv";
     self.title = @"TCZLocalizableTools";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"开始解析" style:UIBarButtonItemStylePlain target:self action:@selector(beginParseAction:)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"❓" style:UIBarButtonItemStylePlain target:self action:@selector(infoAction)];
-
     
     [self createUI];
 }

@@ -117,8 +117,6 @@
 
 - (void)parser:(CHCSVParser *)parser didReadField:(NSString *)field atIndex:(NSInteger)fieldIndex
 {
-    //    NSLog(@"%@", field);
-    
     field = field ?: @"";
     
     if (fieldIndex == 0) {
