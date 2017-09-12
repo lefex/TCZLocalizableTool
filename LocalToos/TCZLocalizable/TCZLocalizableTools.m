@@ -90,7 +90,10 @@
             NSUInteger aLanCount = aLanguages.count;
             for (NSUInteger i = 0, max = _keys.count; i < max; i++) {
                 if (i < aLanCount) {
-                    [temps addObject:[NSString stringWithFormat:@"\"%@\"=\"%@\";",_keys[i], aLanguages[i]]];
+                    
+                    // 避免文本中还有逗号
+                    NSString *aLanguage = [self removeInvalidStr:aLanguages[i]];
+                    [temps addObject:[NSString stringWithFormat:@"\"%@\"=\"%@\";",_keys[i], aLanguage]];
                 } else {
                     [temps addObject:[NSString stringWithFormat:@"\"%@\"=\"%@\";",_keys[i], @""]];
                 }
@@ -120,7 +123,7 @@
     field = field ?: @"";
     
     if (fieldIndex == 0) {
-        NSString *key = [_mapDict objectForKey:field];
+        NSString *key = [_mapDict objectForKey:[self removeInvalidStr:field]];
         [_keys addObject:key ?: @""];
     }
     
@@ -129,6 +132,15 @@
     }
 }
 
+- (NSString *)removeInvalidStr:(NSString *)sourceStr
+{
+    NSMutableString *aLanguage = [[NSMutableString alloc] initWithString:sourceStr];
+    if ([aLanguage containsString:@","] && [aLanguage hasPrefix:@"\""] && [aLanguage hasSuffix:@"\""]) {
+        [aLanguage replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+        [aLanguage deleteCharactersInRange:NSMakeRange(aLanguage.length-1, 1)];
+    }
+    return [aLanguage copy];
+}
 
 
 @end
