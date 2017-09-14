@@ -14,13 +14,15 @@
 
 static const NSUInteger kLanCount = 8;
 static NSString* const kCellId = @"ID";
-static NSString* const kAllLanguageName = @"8-1.csv";
+static NSString* const kAllLanguageName = @"languages.csv";
 
 
 @interface TCZMainViewController ()<UITableViewDataSource, UITableViewDelegate, TCZLocalizableToolsDelegate>
 
 @property (nonatomic, strong) TCZLocalizableTools *localizableTool;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, strong) UILabel *headerLabel;
 
 @end
 
@@ -55,13 +57,27 @@ static NSString* const kAllLanguageName = @"8-1.csv";
 - (void)localizableToolsEndWrite:(TCZLocalizableTools *)tool
 {
     self.title = @"解析成功";
-    
+    [_indicatorView stopAnimating];
+    self.tableView.tableHeaderView = self.headerLabel;
+    self.headerLabel.text = [NSString stringWithFormat:@"国际化后的文件被保存到：%@", [TCZLocalizableTools saveLocalizableRootFilePath]];
     [self.tableView reloadData];
 }
 
 - (void)localizableToolsEndParse:(TCZLocalizableTools *)tool
 {
+    [_indicatorView startAnimating];
     self.title = @"解析完成，正在写入文件...";
+}
+
+- (void)localizableToolsError:(TCZLocalizableTools *)tool error:(NSError *)error
+{
+    self.title = @"解析错误";
+    [_indicatorView stopAnimating];
+    self.tableView.tableHeaderView = nil;
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:error.localizedDescription ?: @"" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDestructive handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource, UITableViewDelegate
@@ -94,7 +110,24 @@ static NSString* const kAllLanguageName = @"8-1.csv";
     _tableView.tableFooterView = [UIView new];
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellId];
     [self.view addSubview:_tableView];
+    
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _indicatorView.tintColor = [UIColor blackColor];
+    _indicatorView.hidesWhenStopped = YES;
+    [self.view addSubview:_indicatorView];
 }
 
+- (UILabel *)headerLabel
+{
+    if (_headerLabel) {
+        return _headerLabel;
+    }
+    _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 120)];
+    _headerLabel.numberOfLines = 0;
+    _headerLabel.adjustsFontSizeToFitWidth = YES;
+    _headerLabel.textColor = [UIColor redColor];
+    _headerLabel.font = [UIFont systemFontOfSize:15];
+    return _headerLabel;
+}
 
 @end

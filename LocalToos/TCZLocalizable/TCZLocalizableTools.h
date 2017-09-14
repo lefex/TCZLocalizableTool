@@ -14,6 +14,7 @@
 
 - (void)localizableToolsEndParse:(TCZLocalizableTools *)tool;
 - (void)localizableToolsEndWrite:(TCZLocalizableTools *)tool;
+- (void)localizableToolsError:(TCZLocalizableTools *)tool error:(NSError *)error;
 
 @end
 
@@ -49,5 +50,13 @@
  解析调用这个方法
  */
 - (void)beginParse;
+
+
+/**
+ 解析完成后国际化文件被保存的目录
+
+ @return 根目录
+ */
++ (NSString *)saveLocalizableRootFilePath;
 
 @end

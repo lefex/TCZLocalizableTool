@@ -15,7 +15,7 @@
 		230A68FA1F4D838D009481A2 /* LocalToosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 230A68F91F4D838D009481A2 /* LocalToosTests.m */; };
 		230A69051F4D838D009481A2 /* LocalToosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 230A69041F4D838D009481A2 /* LocalToosUITests.m */; };
 		230A691B1F4D87EE009481A2 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 230A691A1F4D87EE009481A2 /* CHCSVParser.m */; };
-		230A691E1F4D887A009481A2 /* 8-1.csv in Resources */ = {isa = PBXBuildFile; fileRef = 230A691C1F4D887A009481A2 /* 8-1.csv */; };
+		230A691E1F4D887A009481A2 /* languages.csv in Resources */ = {isa = PBXBuildFile; fileRef = 230A691C1F4D887A009481A2 /* languages.csv */; };
 		230A69211F4D8A92009481A2 /* source.strings in Resources */ = {isa = PBXBuildFile; fileRef = 230A69201F4D8A92009481A2 /* source.strings */; };
 		235521B01F4E8F4F005F38B9 /* TCZInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 235521A91F4E8F4F005F38B9 /* TCZInfoViewController.m */; };
 		235521B11F4E8F4F005F38B9 /* TCZLocalizableTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 235521AB1F4E8F4F005F38B9 /* TCZLocalizableTools.m */; };
@@ -57,7 +57,7 @@
 		230A69061F4D838D009481A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		230A69191F4D87EE009481A2 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
 		230A691A1F4D87EE009481A2 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
-		230A691C1F4D887A009481A2 /* 8-1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "8-1.csv"; sourceTree = "<group>"; };
+		230A691C1F4D887A009481A2 /* languages.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = languages.csv; sourceTree = "<group>"; };
 		230A69201F4D8A92009481A2 /* source.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = source.strings; sourceTree = "<group>"; };
 		235521A81F4E8F4F005F38B9 /* TCZInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCZInfoViewController.h; sourceTree = "<group>"; };
 		235521A91F4E8F4F005F38B9 /* TCZInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCZInfoViewController.m; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				235521A71F4E8F4F005F38B9 /* TCZLocalizable */,
-				230A691C1F4D887A009481A2 /* 8-1.csv */,
+				230A691C1F4D887A009481A2 /* languages.csv */,
 				230A69191F4D87EE009481A2 /* CHCSVParser.h */,
 				230A691A1F4D87EE009481A2 /* CHCSVParser.m */,
 				230A68E21F4D838D009481A2 /* AppDelegate.h */,
@@ -286,7 +286,7 @@
 				230A68EF1F4D838D009481A2 /* LaunchScreen.storyboard in Resources */,
 				230A68EC1F4D838D009481A2 /* Assets.xcassets in Resources */,
 				230A68EA1F4D838D009481A2 /* Main.storyboard in Resources */,
-				230A691E1F4D887A009481A2 /* 8-1.csv in Resources */,
+				230A691E1F4D887A009481A2 /* languages.csv in Resources */,
 				230A69211F4D8A92009481A2 /* source.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

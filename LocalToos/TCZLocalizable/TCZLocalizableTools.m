@@ -23,6 +23,7 @@
 
 @implementation TCZLocalizableTools
 
+#pragma mark - Init
 - (instancetype)initWithSourceFilePath:(NSString *)filePath languageCount:(NSUInteger)lanCount
 {
     self = [super init];
@@ -50,12 +51,6 @@
     return [self initWithSourceFilePath:filePath languageCount:lanCount];
 }
 
-- (void)beginParse
-{
-    [self setUpdata];
-    [_csvParser parse];
-}
-
 - (void)setUpdata
 {
     _keys = [NSMutableArray array];
@@ -67,10 +62,25 @@
     _paeseResults = [temp copy];
 }
 
+#pragma Puablic
+- (void)beginParse
+{
+    [self setUpdata];
+    [_csvParser parse];
+}
+
 #pragma mark - CHCSVParserDelegate
 - (void)parserDidBeginDocument:(CHCSVParser *)parser
 {
     NSLog(@"ParserDidBeginDocument");
+}
+
+- (void)parser:(CHCSVParser *)parser didFailWithError:(NSError *)error
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(localizableToolsError:error:)]) {
+        [self.delegate localizableToolsError:self error:error];
+    }
+    NSLog(@"Parser error: %@", error);
 }
 
 - (void)parserDidEndDocument:(CHCSVParser *)parser
@@ -83,6 +93,15 @@
     
     @autoreleasepool {
         NSMutableArray *languagePaths = [NSMutableArray array];
+        
+        NSString *rootPath = [TCZLocalizableTools saveLocalizableRootFilePath];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:rootPath isDirectory:nil]) {
+            [[NSFileManager defaultManager] removeItemAtPath:rootPath error:nil];
+        }
+        [[NSFileManager defaultManager] createDirectoryAtPath:rootPath withIntermediateDirectories:YES attributes:nil error:nil];
+        
+        NSLog(@"CSV 文件被保存到：%@", rootPath);
+        
         for (NSUInteger i = 0; i < _lanCount; i++) {
             
             NSArray *aLanguages = _paeseResults[i];
@@ -99,7 +118,7 @@
                 }
             }
             
-            NSString *csvFile = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:[NSString stringWithFormat:@"language_%@.csv", @(i)]];
+            NSString *csvFile = [rootPath stringByAppendingPathComponent:[NSString stringWithFormat:@"language_%@.csv", @(i)]];
             [[NSFileManager defaultManager] createFileAtPath:csvFile contents:nil attributes:nil];
             [languagePaths addObject:csvFile];
             
@@ -120,11 +139,11 @@
 
 - (void)parser:(CHCSVParser *)parser didReadField:(NSString *)field atIndex:(NSInteger)fieldIndex
 {
-    field = field ?: @"";
+    field = field.length == 0 ? @"❌❌" : field;
     
     if (fieldIndex == 0) {
         NSString *key = [_mapDict objectForKey:[self removeInvalidStr:field]];
-        [_keys addObject:key ?: @""];
+        [_keys addObject:key ?: @"❌❌"];
     }
     
     if (fieldIndex < _paeseResults.count) {
@@ -132,6 +151,7 @@
     }
 }
 
+#pragma mark - Helper
 - (NSString *)removeInvalidStr:(NSString *)sourceStr
 {
     NSMutableString *aLanguage = [[NSMutableString alloc] initWithString:sourceStr];
@@ -140,6 +160,12 @@
         [aLanguage deleteCharactersInRange:NSMakeRange(aLanguage.length-1, 1)];
     }
     return [aLanguage copy];
+}
+
++ (NSString *)saveLocalizableRootFilePath
+{
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"language"];
+    return rootPath;
 }
 
 
