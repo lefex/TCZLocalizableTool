@@ -1,14 +1,15 @@
-# coding=utf-8 
+# coding=utf-8
 
 import os
 import re
 import shutil
 
-# 是否开启自动删除，开启后当检查到未用到的图，将自动被删除。建议确认所有的图没用后开启
+# 是否开启自动删除，开启后当检查到未用到的图，
+# 将自动被删除。建议确认所有的图没用后开启
 IS_OPEN_AUTO_DEL = False
 
-# 将要解析的项目名称 
-DESPATH = "/Users/wangsuyan/Desktop/project/LGSKmart/LGSKmart"
+# 将要解析的项目名称
+DESPATH = "/Users/wangsuyan/desktop/project/Shopn/Shopn"
 
 # 可能检查出错的图片，需要特别留意下
 ERROR_DESPATH = "/Users/wangsuyan/Desktop/unUseImage/error.log"
@@ -21,26 +22,16 @@ IMAGE_WDESPATH = "/Users/wangsuyan/Desktop/unUseImage/images/"
 
 # 目录黑名单，这个目录下所有的图片将被忽略
 BLACK_DIR_LIST = [
-    DESPATH + '/ThirdPart', # Utils 下所有的文件将被忽略 
-]
+                  DESPATH + '/ThirdPart', # Utils 下所有的文件将被忽略
+                  ]
 
 # 已知某些图片确实存在，比如像下面的图，脚本不会自动检查出，需要手动加入这个数组中
 # NSString *name = [NSString stringWithFormat:@"loading_%d",i];
 # UIImage *image = [UIImage imageNamed:name];
 EXCEPT_IMAGES = [
-    'loading_',
-    'launch-guide',
-    'chat_blank',
-    'col_blank',
-    'col_emptyCart',
-    'msg_',
-    'ord_blank',
-    'order_addressIcon',
-    'per_customer',
-    'per_order',
-    'per_ordersCashierAliPay',
-    'launchImage'
-]
+                 'loading_',
+                 'launch-guide'
+                 ]
 
 # 项目中所有的图
 source_images = dict()
@@ -60,7 +51,7 @@ def isInBlackList(filePath):
 # 是否为图片
 def isimage(filePath):
     ext = os.path.splitext(filePath)[1]
-    return ext == '.png' or ext == '.jpg' or ext == '.jpeg'
+    return ext == '.png' or ext == '.jpg' or ext == '.jpeg' or ext == '.gif'
 
 # 是否为 APPIcon
 def isappicon(filePath):
@@ -79,21 +70,21 @@ def is_except_image(filePath):
 def auto_remove_images():
     f = open(WDESPATH, 'r')
     for line in f.readlines():
-        path = DESPATH + line
+        path = DESPATH + line.strip('\n')
         if not os.path.isdir(path):
             if 'Assets.xcassets' in line:
                 path = os.path.split(path)[0]
                 if os.path.exists(path):
                     shutil.rmtree(path)
             else:
-                os.remove(line)
+                os.remove(path)
 
 
 def un_use_image(filePath):
-    if re.search(r'\w@3x.(png|jpg|jpeg)', filePath):
+    if re.search(r'\w@3x.(png|jpg|jpeg|gif)', filePath):
         return
-
-    if re.search(r'\w(@2x){0,1}.(png|jpg|jpeg)', filePath):
+    
+    if re.search(r'\w(@2x){0,1}.(png|jpg|jpeg|gif)', filePath):
         exts = os.path.splitext(filePath)
         result = (filename(filePath).replace('@2x', '')).replace(exts[1],'')
         source_images[result] = filePath
@@ -112,7 +103,7 @@ def find_image_name(filePath):
             if err_matchs:
                 name = filename(filePath)
                 for item in err_matchs:
-                    err_images.add(str(index + 1) + ':' + name + '<=>' + line + '\n')
+                    err_images.add(str(index + 1) + ':' + name + '\n' + line + '\n')
 
 def find_from_file(path):
     paths = os.listdir(path)
@@ -134,19 +125,20 @@ if __name__ == '__main__':
 
     os.makedirs(IMAGE_WDESPATH)
 
-    wf = open(WDESPATH, 'w')
-    find_from_file(DESPATH)
-    for item in set(source_images.keys()) - use_images:
-        value = source_images[item]
-        wf.write(value.replace(DESPATH, '') + '\n')
-        shutil.copyfile(source_images[item], IMAGE_WDESPATH + item + '.png')
-
+wf = open(WDESPATH, 'w')
+find_from_file(DESPATH)
+for item in set(source_images.keys()) - use_images:
+    value = source_images[item]
+    wf.write(value.replace(DESPATH, '') + '\n')
+    ext = os.path.splitext(value)[1]
+    shutil.copyfile(value, IMAGE_WDESPATH + item + ext)
+    
     wf.close()
-
+    
     ef = open(ERROR_DESPATH, 'w')
     for item in err_images:
         ef.write(item)
     ef.close()
 
-    if IS_OPEN_AUTO_DEL:
-        auto_remove_images()
+if IS_OPEN_AUTO_DEL:
+    auto_remove_images()
