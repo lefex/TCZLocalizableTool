@@ -113,3 +113,4 @@ if __name__ == '__main__':
 ### 使用
 - 修改 DESPATH 路径为你项目的路径
 - 直接在脚本所在的目录下，执行 `python unLocalizable.py`，这个的 `unLocalizable.py` 为脚本文件名。你可以在 [这里](https://github.com/lefex/TCZLocalizableTool/blob/master/LocalToos/TCZLocalizable/unLocalizable.py) 找到脚本文件。
+- BLACKDIRLIST 你可以过滤掉和国际化无关的文件，比如某些第三方库。

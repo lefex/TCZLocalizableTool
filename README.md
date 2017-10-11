@@ -1,5 +1,7 @@
 [简书](http://www.jianshu.com/p/2c77f0d108c3)
 
+[快速找出项目中未国际化的文本](https://github.com/lefex/TCZLocalizableTool/blob/master/FIND_UNLOCALIZABLE.md)
+
 ## 使用前必读
 - 1. source.strings 是已国际化好的文件，比如当前您只有汉语国际化文件，那么就使用汉语国际化文件作为 source.strings，名字必须为 source.strings；
 - 2. 将要解析的文件（所有国际化后的文件），必须为 csv 文件，一般 World，Numbers （建议使用 Numbers）都支持把 excel 文件导出为 csv 文件；命名为：languages.csv 
