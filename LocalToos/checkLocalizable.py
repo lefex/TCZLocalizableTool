@@ -58,19 +58,19 @@ def find_from_file(path):
 
 def parse_result():
     fValues = _result[MAIN_LOCALIZABLE_FILE]
-    ef = open(ERROR_DESPATH, 'w')
-    for k, v in _result.items():
-        if k == MAIN_LOCALIZABLE_FILE:
-            continue
-        result = fValues - v
+    with open(ERROR_DESPATH, 'w') as ef:
+        for k, v in _result.items():
+            if k == MAIN_LOCALIZABLE_FILE:
+                continue
+            result = fValues - v
 
-        ef.write(k + '\n')
-        for item in result:
-            ef.write(item + '\n')
-        ef.write('\n')
-    ef.close()
+            ef.write(k + '\n')
+            for item in result:
+                ef.write(item + '\n')
+            ef.write('\n')
 
 
 if __name__ == '__main__':
     find_from_file(DESPATH)
     parse_result()
+    print('已解析完成，结果保存在桌面中的 checkLocalizable.log 文件中')
