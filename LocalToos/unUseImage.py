@@ -9,7 +9,7 @@ import shutil
 IS_OPEN_AUTO_DEL = False
 
 # 将要解析的项目名称
-DESPATH = "/Users/wangsuyan/desktop/project/Shopn/Shopn"
+DESPATH = "/Users/wangsuyan/desktop/project/ShopnFriends/ShopnFriends"
 
 # 可能检查出错的图片，需要特别留意下
 ERROR_DESPATH = "/Users/wangsuyan/Desktop/unUseImage/error.log"
@@ -68,16 +68,16 @@ def is_except_image(filePath):
     return False
 
 def auto_remove_images():
-    f = open(WDESPATH, 'r')
-    for line in f.readlines():
-        path = DESPATH + line.strip('\n')
-        if not os.path.isdir(path):
-            if 'Assets.xcassets' in line:
-                path = os.path.split(path)[0]
-                if os.path.exists(path):
-                    shutil.rmtree(path)
-            else:
-                os.remove(path)
+    with open(WDESPATH, 'r') as f:
+        for line in f.readlines():
+            path = DESPATH + line.strip('\n')
+            if not os.path.isdir(path):
+                if 'Assets.xcassets' in line:
+                    path = os.path.split(path)[0]
+                    if os.path.exists(path):
+                        shutil.rmtree(path)
+                else:
+                    os.remove(path)
 
 
 def un_use_image(filePath):
@@ -125,20 +125,17 @@ if __name__ == '__main__':
 
     os.makedirs(IMAGE_WDESPATH)
 
-wf = open(WDESPATH, 'w')
-find_from_file(DESPATH)
-for item in set(source_images.keys()) - use_images:
-    value = source_images[item]
-    wf.write(value.replace(DESPATH, '') + '\n')
-    ext = os.path.splitext(value)[1]
-    shutil.copyfile(value, IMAGE_WDESPATH + item + ext)
-    
-    wf.close()
-    
-    ef = open(ERROR_DESPATH, 'w')
-    for item in err_images:
-        ef.write(item)
-    ef.close()
+with open(WDESPATH, 'w') as wf:
+    find_from_file(DESPATH)
+    for item in set(source_images.keys()) - use_images:
+        value = source_images[item]
+        wf.write(value.replace(DESPATH, '') + '\n')
+        ext = os.path.splitext(value)[1]
+        shutil.copyfile(value, IMAGE_WDESPATH + item + ext)
+        
+        with open(ERROR_DESPATH, 'w') as ef:
+            for item in err_images:
+                ef.write(item)
 
 if IS_OPEN_AUTO_DEL:
     auto_remove_images()
