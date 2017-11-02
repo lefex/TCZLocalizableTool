@@ -79,7 +79,8 @@ APP 来说，更是麻烦，而且工作量很大。通常替换国际化文字�
 
 最终结果如图：
 
-![Simulator Screen Shot 2017年8月24日 下午2.49.39.png](http://upload-images.jianshu.io/upload_images/1664496-f66d9a1353134420.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<img style="border-radius: 30px" src="http://upload-images.jianshu.io/upload_images/1664496-f66d9a1353134420.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" title="Lefe_x" width="200"/>
+
 
 ## 如何1秒找出国际化文件语法错误
 
@@ -95,7 +96,7 @@ APP 来说，更是麻烦，而且工作量很大。通常替换国际化文字�
 
 对于支持多语言的 APP 来说，国际化非常麻烦，而找出项目中未国际化的文字非常耗时（如果单纯的靠手动查找）。虽然可以使用 Xcode 自带的工具（Show not-localized strings）或者 Analyze 找出未国际化的文本，但是它们都不够灵活，而且比较耗时。如果能直接把项目中未国际化的文本导入到一个文件中，直接给产品，然后再使用 [TCZLocalizableTool] http://t.cn/ROcrQuB ，岂不是事半功倍。图中就是通过一个 Python 脚本获得的部分未国际化的文本。
 
-** 【如何使用】**
+**【如何使用】**
 * 1.修改 DESPATH 路径为你项目的路径
 * 2.直接在脚本所在的目录下，执行 python unLocalizable.py，这里的 unLocalizable.py 为脚本文件名。你可以在这里 (http://t.cn/ROcrQu1 找到脚本文件。
 * 3.BLACKDIRLIST 你可以过滤掉和国际化无关的文件，比如某些第三方库。
