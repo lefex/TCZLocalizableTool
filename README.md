@@ -85,33 +85,33 @@ APP 来说，更是麻烦，而且工作量很大。通常替换国际化文字�
 
 国际化的时候难免会由于不小心，会出现语法错误，如果国际化文件有几千行的时候，无非是一场灾难。有时为了解决一个语法错误可能会耗费几个小时。使用这个脚本可以 《1秒》 定位到报错的代码行。比如 `"HOM_Lefe" = "wsy“;` 由于错误使用了汉语双引号，导致编译失败。
 
-【如何使用】
-1.修改 DESPATH 为你项目的路径；
-2.直接在脚本所在的目录下，打开终端执行 python localizableError.py，这里的 localizableError.py 为脚本文件名。你可以在这里 http://t.cn/RORnD3s 找到脚本文件；
-3.执行完成后，控制台会打印报错的代码行。
+**【如何使用】**
+* 1.修改 DESPATH 为你项目的路径；
+* 2.直接在脚本所在的目录下，打开终端执行 python localizableError.py，这里的 localizableError.py 为脚本文件名。你可以在这里 http://t.cn/RORnD3s 找到脚本文件；
+* 3.执行完成后，控制台会打印报错的代码行。
 `/en.lproj/Localizable.strings:line[11] : "HOM_Lefe" = "wsy“;`
 
 ## 找出项目中未国际化的文本
 
 对于支持多语言的 APP 来说，国际化非常麻烦，而找出项目中未国际化的文字非常耗时（如果单纯的靠手动查找）。虽然可以使用 Xcode 自带的工具（Show not-localized strings）或者 Analyze 找出未国际化的文本，但是它们都不够灵活，而且比较耗时。如果能直接把项目中未国际化的文本导入到一个文件中，直接给产品，然后再使用 [TCZLocalizableTool] http://t.cn/ROcrQuB ，岂不是事半功倍。图中就是通过一个 Python 脚本获得的部分未国际化的文本。
 
-使用很简单
-1.修改 DESPATH 路径为你项目的路径
-2.直接在脚本所在的目录下，执行 python unLocalizable.py，这里的 unLocalizable.py 为脚本文件名。你可以在这里 (http://t.cn/ROcrQu1 找到脚本文件。
-3.BLACKDIRLIST 你可以过滤掉和国际化无关的文件，比如某些第三方库。
+** 【如何使用】**
+* 1.修改 DESPATH 路径为你项目的路径
+* 2.直接在脚本所在的目录下，执行 python unLocalizable.py，这里的 unLocalizable.py 为脚本文件名。你可以在这里 (http://t.cn/ROcrQu1 找到脚本文件。
+* 3.BLACKDIRLIST 你可以过滤掉和国际化无关的文件，比如某些第三方库。
 
 
 ## 更人性化的找出中未使用的图
 
-【痛点】
+**【痛点】**
 删除 iOS 项目中没有用到的图片市面上已经有很多种方式，但是我试过几个都不能很好地满足需求，因此使用 Python 写了这个脚本，它可能也不能很好的满足你的需求，因为这种静态查找始终会存在问题，每个人写的代码风格不一，导致匹配字符不一。所以只有掌握了脚本的写法，才能很好的满足自己的需求。如果你的项目中使用 OC，而且使用纯代码布局，使用这个脚本完全没有问题。当然你可以修改脚本来达到自己的需求。本文主要希望能够帮助更多的读者节省更多时间做一些有意义的工作，避免那些乏味重复的工作。
 
-【如何使用】
-1.修改 DESPATH 为你项目的路径；
-2.直接在脚本所在的目录下，打开终端执行 python unUseImage.py，这里的 unUseImage.py 为脚本文件名。你可以在这里 http://t.cn/ROXKobQ 找到脚本文件；
-3.执行完成后，桌面会出现一个 unUseImage 文件夹。文件夹中的 error.log 文件记录了可能存在未匹配到图片的文件目录，image.log 记录了项目中没使用的图片路径，images 存放了未使用到的图片。
+**【如何使用】**
+* 1.修改 DESPATH 为你项目的路径；
+* 2.直接在脚本所在的目录下，打开终端执行 python unUseImage.py，这里的 unUseImage.py 为脚本文件名。你可以在这里 http://t.cn/ROXKobQ 找到脚本文件；
+* 3.执行完成后，桌面会出现一个 unUseImage 文件夹。文件夹中的 error.log 文件记录了可能存在未匹配到图片的文件目录，image.log 记录了项目中没使用的图片路径，images 存放了未使用到的图片。
 
-【重要提示】
+**【重要提示】**
 当确认 `images` 文件夹中含有正在使用的图时，复制图片名字到 EXCEPT_IMAGES 中，再次执行脚本，确认 images 文件夹中不再包含使用的图后，修改 IS_OPEN_AUTO_DEL 为 True，执行脚本，脚本将自动清除所有未使用的图。
 
 ## 如何找出国际化文件中未国际化的文本
@@ -132,11 +132,11 @@ APP 来说，更是麻烦，而且工作量很大。通常替换国际化文字�
 
 这样导致，英文环境下，`SHC_shopnCart` 和 `GRB_groupBuy` 未国际化，使用这个脚本会检测出这些错误。
 
-【如何使用】
+**【如何使用】**
 
-1.修改 DESPATH 为你项目的路径；
-2.直接在脚本所在的目录下，打开终端执行 python checkLocalizable.py，这里的 checkLocalizable.py 为脚本文件名。你可以在这里 http://t.cn/ROge6j4 找到脚本文件；
-3.执行完成后，桌面会出现一个文件 checkLocalizable.log，记录了未国际化的行：
+* 1.修改 DESPATH 为你项目的路径；
+* 2.直接在脚本所在的目录下，打开终端执行 python checkLocalizable.py，这里的 checkLocalizable.py 为脚本文件名。你可以在这里 http://t.cn/ROge6j4 找到脚本文件；
+* 3.执行完成后，桌面会出现一个文件 checkLocalizable.log，记录了未国际化的行：
 
 ```
 /en.lproj/Localizable.strings
